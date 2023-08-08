@@ -1,6 +1,5 @@
 from flask import Flask
-
-
+from api import app
 
 # Checks to see if the name of the package is the run as the main package.
 if __name__ == "__main__":
