@@ -2,17 +2,6 @@
 from api import db
 
 
-app_user_association = db.Table(
-    "app_user_association",
-    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
-    db.Column("app_id", db.Integer, db.ForeignKey("app.id"), primary_key=True),
-    db.Column("permission_level", db.String),
-    db.Column("activation_date", db.DateTime),
-    db.Column("finish_date", db.DateTime),
-    db.Column("account_status", db.String),
-)
-
-
 # we define the class that is gonna be used in the DB
 class User(db.Model):
     """class representing a User that gonna request the apps"""
@@ -21,7 +10,8 @@ class User(db.Model):
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    apps = db.relationship('App', secondary=app_user_association, back_populates='users')
+    apps = db.relationship('Lumos', back_populates='user', lazy='dynamic')
+    
 
     def serialize(self):
         """Method that translates the data into a JSON / Dictionary."""
@@ -39,7 +29,8 @@ class App(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     app_name = db.Column(db.String, nullable=False)
     app_icon = db.Column(db.String, nullable=False)
-    users = db.relationship('User', secondary=app_user_association, back_populates='apps')
+    users = db.relationship('Lumos', back_populates='app', lazy='dynamic')
+    
 
     def serialize(self):
         """same function for JSON formating"""
@@ -49,4 +40,28 @@ class App(db.Model):
             "app_icon": self.app_icon
         }
 
+
+class Lumos(db.Model):
+    """the many to many relationship table"""
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    app_id = db.Column(db.Integer, db.ForeignKey('app.id')) 
+    permission_level = db.Column(db.Integer, nullable=False)
+    activation_date = db.Column(db.DateTime, nullable=False)
+    expiration_date = db.Column(db.DateTime, nullable=False)
+    account_status = db.Column(db.String, nullable=False)
+
+    user = db.relationship('User', back_populates='apps')
+    app = db.relationship('App', back_populates='users')
+
+    def serialize(self):
+        """Method that translates the data into a JSON / Dictionary."""
+        return {
+            "user_id": self.user_id,
+            "app_id": self.app_id,
+            "permission_level": self.permission_level,
+            "activation_date": self.activation_date,
+            "expiration_date": self.expiration_date,
+            "account_status": self.account_status
+        }
 
