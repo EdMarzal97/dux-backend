@@ -6,10 +6,10 @@ app_user_association = db.Table(
     "app_user_association",
     db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
     db.Column("app_id", db.Integer, db.ForeignKey("app.id"), primary_key=True),
-    db.Column("permission_level", db.String, nullable=False),
-    db.Column("activation_date", db.DateTime, nullable=False),
-    db.Column("finish_date", db.DateTime, nullable=False),
-    db.Column("account_status", db.String, nullable=False),
+    db.Column("permission_level", db.String),
+    db.Column("activation_date", db.DateTime),
+    db.Column("finish_date", db.DateTime),
+    db.Column("account_status", db.String),
 )
 
 
