@@ -10,7 +10,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{os.getcwd()}/dux.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
+
 # Annotation that allows for the endpoints / URL to be hit.
-@app.route('/')
+@app.route("/")
 def hello_world():
-	return 'Guten Morgen!'
+    return "Guten Morgen!"
