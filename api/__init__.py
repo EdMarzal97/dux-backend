@@ -1,3 +1,4 @@
+"""in this file we are implementing the configuration of sqlalchemy and connecting it to the db"""
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -9,9 +10,3 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{os.getcwd()}/dux.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
-
-
-# Annotation that allows for the endpoints / URL to be hit.
-@app.route("/")
-def hello_world():
-    return "Guten Morgen!"
