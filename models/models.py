@@ -30,7 +30,11 @@ class App(db.Model):
 
     def serialize(self):
         """same function for JSON formating"""
-        return {"id": self.id, "app_name": self.app_name, "app_icon": self.app_icon}
+        return {
+            "id": self.id, 
+            "app_name": self.app_name, 
+            "app_icon": self.app_icon
+        }
 
 
 user_app = db.Table(
