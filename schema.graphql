@@ -1,0 +1,81 @@
+scalar DateTime
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+Type User {
+    id: ID!
+    name: String!
+    email: String!
+    password: String!
+}
+
+Type App {
+    id: ID!
+    appName: String!
+    appIcon: String!
+}
+
+Type Lumos {
+    id: ID!
+    permissionLevel: Int!
+    activationDate: DateTime!
+    expirationDate: DateTime!
+    accountStatus: String!
+    user:User
+    app:App
+}
+
+input CreateUserInput {
+    name: String!
+    email: String!
+    password: String!
+}
+
+input UpdateUserInput {
+    id: ID!
+    name: String
+    email: String
+    password: String
+}
+
+input CreateAppInput {
+    appName: String!
+    appIcon: String!
+}
+
+input UpdateAppInput {
+    id: Int!
+    appName: String
+    appIcon: String
+}
+
+input CreateLumosInput {
+    userId: ID!
+    appId: ID!
+    permissionLevel: String!
+    activationDate: DateTime!
+    expirationDate: DateTime!
+    accountStatus: String!
+}
+
+type Query {
+    getUsers: [User]
+    getUser(id: ID!): User
+    getApps: [App]
+    getApp(id: ID!): App
+    getLumos: [Lumos]
+}
+
+type Mutation {
+    createUser(input: CreateUserInput!): User
+    updateUser(input: UpdateUserInput!): User
+    deleteUser(id: ID!): Boolean
+    createApp(input: CreateAppInput!): App
+    updateApp(input: UpdateAppInput!): App
+    deleteApp(id: ID!): Boolean
+    createLumos(input: CreateLumosInput!): Lumos
+    deleteLumos(id: ID!): Boolean
+}
