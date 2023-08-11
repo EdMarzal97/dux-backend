@@ -10,10 +10,10 @@ def resolve_user(obj, info, user_id):
     return User.query.get(user_id)
 
 def resolve_create_user(obj, info, username, email, password):
-    user = User(username=username, email=email, password=password)
-    db.session.add(user)
+    new_user = User(username=username, email=email, password=password)
+    db.session.add(new_user)
     db.session.commit()
-    return user
+    return new_user
 
 def resolve_update_user(obj, info, user_id, input):
     user = User.query.get(user_id)
@@ -39,10 +39,10 @@ def resolve_app(obj, info, app_id):
     return App.query.get(app_id)
 
 def resolve_create_app(obj, info, app_name, app_icon):
-    app = App(app_name=app_name, app_icon=app_icon)
-    db.session.add(app)
+    new_app = App(app_name=app_name, app_icon=app_icon)
+    db.session.add(new_app)
     db.session.commit()
-    return app
+    return new_app
 
 def resolve_update_app(obj, info, app_id, input):
     app = App.query.get(app_id)
@@ -72,7 +72,7 @@ def resolve_lumos(obj, info, lumos_id):
  #   return App.query.get(app_id).user_lumos
 
 def resolve_create_lumos(obj, info, user_id, app_id, permission_level):
-    lumos = Lumos(
+    new_lumos = Lumos(
         user_id=user_id,
         app_id=app_id,
         permission_level=permission_level,
@@ -80,9 +80,9 @@ def resolve_create_lumos(obj, info, user_id, app_id, permission_level):
         expiration_date=datetime,
         account_status='active'
     )
-    db.session.add(lumos)
+    db.session.add(new_lumos)
     db.session.commit()
-    return lumos
+    return new_lumos
 
 def resolve_update_Lumos(obj, info, lumos_id, input):
     lumos = Lumos.query.get(lumos_id)
